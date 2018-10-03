@@ -6,11 +6,18 @@ MongoClient.connect('mongodb://localhost:27017/TodoAppApi',(err,client)=>{
     console.log("Connected to MongoDB Server");
 	
 	const db = client.db("TodoAppApi")
-    db.collection("Todos").find({name:"chandu"}).then((result)=>{
+    db.collection("Todos").findOneAndUpdate(
+	{_id:1},
+	{
+		$inc:{quantity:-3,"metrics.orders":3}
+	},
+	{
+	returnOriginal:false	
+	}).then((result)=>{
 		console.log(result);
 	},(err)=>{
 		console.log("deleting failed",err);
 	});
 
-    client.close();
+    //client.close();
 })
